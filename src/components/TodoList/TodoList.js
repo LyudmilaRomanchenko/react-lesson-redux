@@ -1,9 +1,15 @@
 import React from "react";
-import { connect } from "react-redux";
+import { connect, useSelector, useDispatch } from "react-redux";
 import todosActions from "../../redux/todos/todos-actions";
+import { getTodos } from "../../redux/todos/todos-selector";
 
-function TodoList({ todos, onDeleteTodo }) {
-  console.log(todos);
+function TodoList() {
+  // console.log(todos);
+
+  const todos = useSelector(getTodos);
+  const dispatch = useDispatch();
+  const onDeleteTodo = (id) => dispatch(todosActions.deleteTodo(id));
+
   return (
     <>
       <ul>
@@ -20,12 +26,14 @@ function TodoList({ todos, onDeleteTodo }) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  todos: state.todos.items,
-});
+export default TodoList;
 
-const mapDispatchToProps = (dispatch) => ({
-  onDeleteTodo: (id) => dispatch(todosActions.deleteTodo(id)),
-});
+// const mapStateToProps = (state) => ({
+//   todos: state.todos.items,
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
+// const mapDispatchToProps = (dispatch) => ({
+//   onDeleteTodo: (id) => dispatch(todosActions.deleteTodo(id)),
+// });
+
+// export default connect(mapStateToProps, mapDispatchToProps)(TodoList);

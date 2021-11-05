@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import todosActions from "../../redux/todos/todos-actions";
 
-function Input({ onSubmit }) {
+function Input() {
   const [name, setName] = useState("");
+
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     // const { name } = e.target;
@@ -15,7 +17,8 @@ function Input({ onSubmit }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    onSubmit(name);
+    // onSubmit(name);
+    dispatch(todosActions.addTodo(name));
 
     setName("");
   };
@@ -38,11 +41,13 @@ function Input({ onSubmit }) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit: (text) => dispatch(todosActions.addTodo(text)),
-});
+export default Input;
 
-export default connect(null, mapDispatchToProps)(Input);
+// const mapDispatchToProps = (dispatch) => ({
+//   onSubmit: (text) => dispatch(todosActions.addTodo(text)),
+// });
+
+// export default connect(null, mapDispatchToProps)(Input);
 
 // Реализация на классах
 

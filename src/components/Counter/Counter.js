@@ -1,28 +1,38 @@
-import { connect } from "react-redux";
+import { connect, useSelector, useDispatch } from "react-redux";
 import * as actions from "../../redux/counter/counter-action";
+import { getValue, getStep } from "../../redux/counter/counter-selector";
 
-function Counter({ value, step, onIncrement, onDecrement }) {
+function Counter() {
+  const value = useSelector(getValue);
+  const step = useSelector(getStep);
+  const dispatch = useDispatch();
+
+  const increment = () => dispatch(actions.increment(step));
+  const decrement = () => dispatch(actions.decrement(step));
+
   return (
     <div>
       <span>{value}</span>
-      <button type="button" onClick={() => onIncrement(step)}>
+      <button type="button" onClick={increment}>
         Увеличить на {step}
       </button>
-      <button type="button" onClick={() => onDecrement(step)}>
+      <button type="button" onClick={decrement}>
         Уменьшить на {step}
       </button>
     </div>
   );
 }
 
-const mapStateToProps = (state) => ({
-  value: state.counter.value,
-  step: state.counter.step,
-});
+export default Counter;
 
-const mapDispatchToProps = (dispatch) => ({
-  onIncrement: (value) => dispatch(actions.increment(value)),
-  onDecrement: (value) => dispatch(actions.decrement(value)),
-});
+// const mapStateToProps = (state) => ({
+//   value: state.counter.value,
+//   step: state.counter.step,
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+// const mapDispatchToProps = (dispatch) => ({
+//   onIncrement: (value) => dispatch(actions.increment(value)),
+//   onDecrement: (value) => dispatch(actions.decrement(value)),
+// });
+
+// export default connect(mapStateToProps, mapDispatchToProps)(Counter);
